@@ -27,18 +27,18 @@ public class Application {
 	public CommandLineRunner demo(CustomerRepository customerRepo, AccountRepository accountRepo) {
 		return (args) -> {
 			// save a couple of customers
-			customerRepo.save(new Customer("Jack", "Bauer"));
-			customerRepo.save(new Customer("Chloe", "O'Brian"));
-			customerRepo.save(new Customer("Kim", "Bauer"));
-			customerRepo.save(new Customer("David", "Palmer"));
-			customerRepo.save(new Customer("Michelle", "Dessler"));
+			Customer c1 = customerRepo.save(new Customer("Jack", "Bauer"));
+			Customer c2 = customerRepo.save(new Customer("Chloe", "O'Brian"));
+			Customer c3 = customerRepo.save(new Customer("Kim", "Bauer"));
+			Customer c4 = customerRepo.save(new Customer("David", "Palmer"));
+			Customer c5 = customerRepo.save(new Customer("Michelle", "Dessler"));
 
 			// save a couple of accounts belongs to customer
-			accountRepo.save(new Account(1L, new BigDecimal(100)));
-			accountRepo.save(new Account(2L, new BigDecimal(200)));
-			accountRepo.save(new Account(3L, new BigDecimal(300)));
-			accountRepo.save(new Account(4L, new BigDecimal(400)));
-			accountRepo.save(new Account(5L, new BigDecimal(500)));
+			accountRepo.save(new Account(c1.getId(), new BigDecimal(100)));
+			accountRepo.save(new Account(c2.getId(), new BigDecimal(200)));
+			accountRepo.save(new Account(c3.getId(), new BigDecimal(300)));
+			accountRepo.save(new Account(c4.getId(), new BigDecimal(400)));
+			accountRepo.save(new Account(c5.getId(), new BigDecimal(500)));
 
 			// fetch all customers
 			log.info("Customers found with findAll():");
