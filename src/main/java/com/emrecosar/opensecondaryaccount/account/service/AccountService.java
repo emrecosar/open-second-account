@@ -9,7 +9,7 @@ public interface AccountService {
 
 	List<Account>getAccountsForCustomer(Long customerId);
 
-	Account createAccountForCustomer(Long customerId, BigDecimal amount);
-	
 	Account updateAccountForCustomer(Long accountId, BigDecimal newBalance);
+
+	Account createAccountForCustomer(Long customerId, BigDecimal amount);
 }

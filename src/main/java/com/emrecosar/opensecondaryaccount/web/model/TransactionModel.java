@@ -1,38 +1,24 @@
-package com.emrecosar.opensecondaryaccount.transaction.model;
+package com.emrecosar.opensecondaryaccount.web.model;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class TransactionModel {
 
-@Entity
-@Table(name = "TRANSACTION")
-public class Transaction {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "FROM_CUSTOMER")
 	private Long fromCustomer;
 
-	@Column(name = "FROM_ACCOUNT")
 	private Long fromAccount;
 
-	@Column(name = "TO_ACCOUNT")
 	private Long toAccount;
 
-	@Column(name = "AMOUNT")
 	private BigDecimal amount;
 
-	public Transaction() {
+	public TransactionModel() {
 	}
-	
-	public Transaction(Long fromCustomer, Long fromAccount, Long toAccount, BigDecimal amount) {
+
+	public TransactionModel(Long id, Long fromCustomer, Long fromAccount, Long toAccount, BigDecimal amount) {
+		this.id = id;
 		this.fromCustomer = fromCustomer;
 		this.fromAccount = fromAccount;
 		this.toAccount = toAccount;

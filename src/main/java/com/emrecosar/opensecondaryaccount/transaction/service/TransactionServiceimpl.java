@@ -26,12 +26,7 @@ public class TransactionServiceimpl implements TransactionService{
 
 	@Override
 	public Transaction createTransaction(Long fromCustomer, Long fromAccount, Long toAccount, BigDecimal initialCredit) {
-		Transaction transaction = new Transaction();
-		transaction.setAmount(initialCredit);
-		transaction.setFromCustomer(fromCustomer);
-		transaction.setFromAccount(fromAccount);
-		transaction.setToAccount(toAccount);
-		return repo.save(transaction);
+		return repo.save(new Transaction(fromCustomer, fromAccount, toAccount, initialCredit));
 	}
 
 }

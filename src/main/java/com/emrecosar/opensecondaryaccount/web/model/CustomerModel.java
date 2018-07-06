@@ -1,30 +1,19 @@
-package com.emrecosar.opensecondaryaccount.user.model;
+package com.emrecosar.opensecondaryaccount.web.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class CustomerModel {
 
-@Entity
-@Table(name = "CUSTOMER")
-public class Customer {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "NAME")
 	private String name;
 
-	@Column(name = "SURNAME")
 	private String surname;
 
-	public Customer() {
+	public CustomerModel() {
 	}
 
-	public Customer(String name, String surname) {
+	public CustomerModel(Long id, String name, String surname) {
+		super();
+		this.id = id;
 		this.name = name;
 		this.surname = surname;
 	}
@@ -52,7 +41,7 @@ public class Customer {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Id : " + this.getId() + "; Name : " + this.getName() + "; Surname : " + this.getSurname();

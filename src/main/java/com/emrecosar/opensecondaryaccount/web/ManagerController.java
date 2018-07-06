@@ -12,20 +12,25 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.emrecosar.opensecondaryaccount.account.model.Account;
 import com.emrecosar.opensecondaryaccount.account.service.AccountService;
+import com.emrecosar.opensecondaryaccount.customer.model.Customer;
+import com.emrecosar.opensecondaryaccount.customer.service.CustomerService;
+import com.emrecosar.opensecondaryaccount.mapper.CommonMapper;
 import com.emrecosar.opensecondaryaccount.transaction.model.Transaction;
 import com.emrecosar.opensecondaryaccount.transaction.service.TransactionService;
-import com.emrecosar.opensecondaryaccount.user.model.Customer;
-import com.emrecosar.opensecondaryaccount.user.service.CustomerService;
+import com.emrecosar.opensecondaryaccount.web.model.AccountModel;
 import com.emrecosar.opensecondaryaccount.web.model.CustomerEnrichedDataModel;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 @RestController
-@RequestMapping
+@Api(value = "Manager Controller for open account and get user")
 public class ManagerController {
 
 	CustomerService customerService;
@@ -33,6 +38,8 @@ public class ManagerController {
 	TransactionService transactionService;
 
 	AccountService accountService;
+	
+	CommonMapper mapper = CommonMapper.INSTANCE;
 
 	@Autowired
 	public ManagerController(CustomerService customerService, TransactionService transactionService,
@@ -42,10 +49,11 @@ public class ManagerController {
 		this.accountService = accountService;
 	}
 
+	@ApiOperation(value = "create secondary account")
 	@PostMapping(value = "/account")
 	public ResponseEntity<?> openSecondaryAccount(
-			@RequestParam(value = "customer id", required = true) Long customerId,
-			@RequestParam(value = "initial credit", required = true) BigDecimal initialCredit)
+			@RequestParam(value = "customerId", required = true) @ApiParam(value = "customer id", example = "1") Long customerId,
+			@RequestParam(value = "initialCredit", required = true) @ApiParam(value = "initial credit", example = "10") BigDecimal initialCredit)
 			throws IOException {
 
 		Account secondaryAccount = null; 
@@ -64,13 +72,11 @@ public class ManagerController {
 						HttpStatus.CONFLICT);
 			}
 
-			Account account = accounts.get(0);
-
 			secondaryAccount = accountService.createAccountForCustomer(customerId, initialCredit);
 
-			if (initialCredit.compareTo(BigDecimal.ZERO) > 0 && account.getBalance().compareTo(initialCredit) > 0) {
-				accountService.updateAccountForCustomer(account.getId(), account.getBalance().subtract(initialCredit));
-				transactionService.createTransaction(customer.getId(), account.getId(), secondaryAccount.getId(), initialCredit);
+			if (initialCredit.compareTo(BigDecimal.ZERO) > 0 && accounts.get(0).getBalance().compareTo(initialCredit) > 0) {
+				accountService.updateAccountForCustomer(accounts.get(0).getId(), accounts.get(0).getBalance().subtract(initialCredit));
+				transactionService.createTransaction(customer.getId(), accounts.get(0).getId(), secondaryAccount.getId(), initialCredit);
 			}
 
 		} else {
@@ -78,12 +84,13 @@ public class ManagerController {
 					HttpStatus.NOT_FOUND);
 		}
 
-		return new ResponseEntity<Account>(secondaryAccount, HttpStatus.CREATED);
+		return new ResponseEntity<AccountModel>(mapper.toAccountModel(secondaryAccount), HttpStatus.CREATED);
 	}
 	
+	@ApiOperation(value = "retreive customer informations with transactions")
 	@GetMapping(value = "/customer/{customerId}")
 	public ResponseEntity<?> getCustomerInformation(
-			@PathVariable(value = "customerId", required = true) Long customerId)
+			@PathVariable(value = "customerId", required = true) @ApiParam(value = "customer id", example = "1") Long customerId)
 			throws IOException {
 		
 		CustomerEnrichedDataModel response = new CustomerEnrichedDataModel();
@@ -106,7 +113,7 @@ public class ManagerController {
 			
 			List<Transaction> transactions = transactionService.getTransactions(customer.getId());
 			
-			response.setTransactions(transactions);
+			response.setTransactions(mapper.toTransactionsModel(transactions));
 			
 		} else {
 			return new ResponseEntity<String>("Customer not found!",

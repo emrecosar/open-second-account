@@ -3,8 +3,6 @@ package com.emrecosar.opensecondaryaccount.web.model;
 import java.math.BigDecimal;
 import java.util.List;
 
-import com.emrecosar.opensecondaryaccount.transaction.model.Transaction;
-
 public class CustomerEnrichedDataModel {
 
 	private String name;
@@ -13,10 +11,10 @@ public class CustomerEnrichedDataModel {
 
 	private BigDecimal totalBalance;
 
-	private List<Transaction> transactions;
+	private List<TransactionModel> transactions;
 
 	public CustomerEnrichedDataModel(String name, String surname, BigDecimal totalBalance,
-			List<Transaction> transactions) {
+			List<TransactionModel> transactions) {
 		this.name = name;
 		this.surname = surname;
 		this.totalBalance = totalBalance;
@@ -50,11 +48,11 @@ public class CustomerEnrichedDataModel {
 		this.totalBalance = totalBalance;
 	}
 
-	public List<Transaction> getTransactions() {
+	public List<TransactionModel> getTransactions() {
 		return transactions;
 	}
 
-	public void setTransactions(List<Transaction> transactions) {
+	public void setTransactions(List<TransactionModel> transactions) {
 		this.transactions = transactions;
 	}
 

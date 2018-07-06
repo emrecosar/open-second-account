@@ -1,12 +1,12 @@
-package com.emrecosar.opensecondaryaccount.user.service;
+package com.emrecosar.opensecondaryaccount.customer.service;
 
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.emrecosar.opensecondaryaccount.user.dao.CustomerRepository;
-import com.emrecosar.opensecondaryaccount.user.model.Customer;
+import com.emrecosar.opensecondaryaccount.customer.dao.CustomerRepository;
+import com.emrecosar.opensecondaryaccount.customer.model.Customer;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
