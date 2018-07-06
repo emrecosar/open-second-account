@@ -26,8 +26,8 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	@Override
-	public Account createAccountForCustomer(Long customerId, BigDecimal amount) {
-		return repo.save(new Account(customerId, amount));
+	public Account createAccountForCustomer(Long customerId) {
+		return repo.save(new Account(customerId, BigDecimal.ZERO));
 	}
 
 	@Override

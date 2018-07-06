@@ -65,6 +65,14 @@ public class Application {
 				log.info(account.toString());
 			}
 			log.info("");
+			
+			// fetch all transactions
+			log.info("Customers found with findAll():");
+			log.info("-------------------------------");
+			for (Transaction transaction : transactionRepo.findAll()) {
+				log.info(transaction.toString());
+			}
+			log.info("");
 		};
 	}
 }

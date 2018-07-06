@@ -11,5 +11,5 @@ public interface AccountService {
 
 	Account updateAccountForCustomer(Long accountId, BigDecimal newBalance);
 
-	Account createAccountForCustomer(Long customerId, BigDecimal amount);
+	Account createAccountForCustomer(Long customerId);
 }

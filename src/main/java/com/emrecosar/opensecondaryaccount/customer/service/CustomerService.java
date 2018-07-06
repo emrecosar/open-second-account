@@ -6,6 +6,6 @@ import com.emrecosar.opensecondaryaccount.customer.model.Customer;
 
 public interface CustomerService {
 
-	Optional<Customer> findUser(Long customerId);
+	Optional<Customer> findCustomer(Long customerId);
 
 }

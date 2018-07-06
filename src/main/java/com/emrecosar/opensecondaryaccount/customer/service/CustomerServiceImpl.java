@@ -20,7 +20,7 @@ public class CustomerServiceImpl implements CustomerService{
 	}
 
 	@Override
-	public Optional<Customer> findUser(Long customerId) {
+	public Optional<Customer> findCustomer(Long customerId) {
 		return repo.findById(customerId);
 	}
 
