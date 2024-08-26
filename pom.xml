@@ -24,7 +24,7 @@
 		<java.version>11</java.version>
 
 		<org.mapstruct.version>1.2.0.Final</org.mapstruct.version>
-		<io.springfox.version>2.7.0</io.springfox.version>
+		<io.springfox.version>2.10.0</io.springfox.version>
 	</properties>
 
 	<dependencies>
